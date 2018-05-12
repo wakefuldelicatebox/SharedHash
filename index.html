@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Calculate Shared Hash</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="js/sha256.js"></script>
+    <script type='text/javascript'>
+      function calcHash() {
+        var sc = document.getElementById("s_currency").value;
+        var sq = document.getElementById("s_quantity").value;
+        var saf = document.getElementById("s_address_from").value;
+        var sat = document.getElementById("s_address_to").value;
+        var bc = document.getElementById("b_currency").value;
+        var bq = document.getElementById("b_quantity").value;
+        var baf = document.getElementById("b_address_from").value;
+        var bat = document.getElementById("b_address_to").value;
+
+        var hash_string =
+            sq + "-" + sc + "," +
+            saf + ">" + sat + ";" +
+            bq + "-" + bc + "," +
+            baf + ">" + bat + ";";
+
+        document.getElementById('display_hash').value = CryptoJS.SHA256(hash_string);
+    }
+    </script>
+  </head>
+  <body>
+    <form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Generate Shared Hash for Trade</legend>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="s_currency">Seller - Currency</label>
+  <div class="col-md-4">
+    <select id="s_currency" name="s_currency" class="form-control">
+      <option value="Amoveo">Amoveo</option>
+    </select>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="s_quantity">Seller - Send Quantity</label>
+  <div class="col-md-4">
+  <input id="s_quantity" name="s_quantity" placeholder="" class="form-control input-md" type="text">
+  <span class="help-block">Quantity of Veo being sent</span>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="s_address_from">Seller - Address From</label>
+  <div class="col-md-4">
+  <input id="s_address_from" name="s_address_from" placeholder="" class="form-control input-md" required="" type="text">
+  <span class="help-block">Amoveo address that Amoveo seller is sending from</span>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="s_address_to">Seller - Address To</label>
+  <div class="col-md-4">
+  <input id="s_address_to" name="s_address_to" placeholder="" class="form-control input-md" required="" type="text">
+  <span class="help-block">Amoveo address that Amoveo seller is sending to</span>
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="b_currency">Buyer - Currency</label>
+  <div class="col-md-4">
+    <select id="b_currency" name="b_currency" class="form-control">
+      <option value="BTC">(BTC) Bitcoin</option>
+      <option value="ETH">(ETH) Ether</option>
+    </select>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="b_quantity">Buyer - Send Quantity</label>
+  <div class="col-md-4">
+  <input id="b_quantity" name="b_quantity" placeholder="" class="form-control input-md" type="text">
+  <span class="help-block">Quantity of Currency being sent</span>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="b_address_from">Buyer - Address From</label>
+  <div class="col-md-4">
+  <input id="b_address_from" name="b_address_from" placeholder="" class="form-control input-md" required="" type="text">
+  <span class="help-block">Address that buyer is sending from</span>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="b_address_to">Buyer - Address To</label>
+  <div class="col-md-4">
+  <input id="b_address_to" name="b_address_to" placeholder="" class="form-control input-md" type="text">
+  <span class="help-block">Address that buyer is sending to</span>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="calculate">Calculate Shared Hash</label>
+  <div class="col-md-4">
+    <button type="button" id="calculate" name="calculate" class="btn btn-primary" onclick="calcHash();">Calculate</button>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="hash">SHA256 hash</label>
+  <div class="col-md-4">
+    <textarea class="form-control" id="display_hash" name="hash">Hash will appear here</textarea>
+  </div>
+</div>
+
+</fieldset>
+</form>
+<footer class="footer">
+      <div class="container">
+        <span class="text-muted">maintained by: cpryt @ amoveo discord</span>
+      </div>
+</footer>
+  </body>
+</html>
